@@ -1,8 +1,8 @@
-import React from 'react'
-import { OrderSuccess } from './components/OrderSuccess'
-import { OrderFail } from './components/OrderFail'
-import { useLocation } from 'react-router-dom'
-import { useTitle } from '../../hook'
+import React from "react";
+import { useLocation } from "react-router-dom";
+import { useTitle } from "../../hook";
+import { OrderFail } from "./components/OrderFail";
+import { OrderSuccess } from "./components/OrderSuccess";
 
 export const OrderPage = () => {
   useTitle("Order Summary")
