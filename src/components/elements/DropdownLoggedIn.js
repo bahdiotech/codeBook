@@ -6,11 +6,10 @@ import { logout } from "../../services";
 
 export const DropdownLoggedIn = ({ setDropDown, setSideNav, sideNav }) => {
   const navigate = useNavigate();
-  // const [user, setUser] = useState({})
 
   const cbid = JSON.parse(sessionStorage.getItem("cbid"));
 
-  const { data: user, error } = useFetch(`http://localhost:8000/600/users/${cbid}`);
+  const { data: user, error } = useFetch(`${process.env.REACT_APP_HOST}/600/users/${cbid}`);
 
 
  error && toast.error(error, {position: 'bottom-center'})
