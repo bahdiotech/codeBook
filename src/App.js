@@ -1,8 +1,6 @@
-
-import { useState } from 'react';
-import './App.css';
-import { Header, Footeer } from './components';
-import { AllRoutes } from './routes/AllRoutes';
+import "./App.css";
+import { Footeer, Header } from "./components";
+import { AllRoutes } from "./routes/AllRoutes";
 
 function App() {
  
