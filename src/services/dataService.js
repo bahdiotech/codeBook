@@ -10,7 +10,7 @@ function getSession(){
 
 export async function getUser() {
   const browserData = getSession();
-  const url = `${ process.env.REACT_APP_HOST}/600/users/${browserData.cbid}`;
+  const url = `${process.env.REACT_APP_HOST}/600/users/${browserData.cbid}`;
   const requestOption = {
     method: "GET",
     headers: {

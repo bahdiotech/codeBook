@@ -9,7 +9,7 @@ export const Dashboard = () => {
   useTitle('DashBoard')
   const cbid = JSON.parse(sessionStorage.getItem("cbid"));
 
-  const {data:orders, error} = useFetch(`http://localhost:8000/660/orders?user.id=${cbid}`)
+  const { data: orders, error } = useFetch(`${process.env.REACT_APP_HOST}/660/orders?user.id=${cbid}`)
   !orders && toast.error(error, { position: 'bottom-center' })
   error && toast.error(error, { position: 'bottom-center' })
 
