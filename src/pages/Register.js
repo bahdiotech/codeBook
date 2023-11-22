@@ -59,7 +59,7 @@ export const Register = () => {
 
 
 
-  useTitle("Register codebook");
+  useTitle("Register for Codebook");
 
   return (
     <div className="flex  justify-center h-screen">
