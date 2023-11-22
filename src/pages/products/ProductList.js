@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { toast } from "react-toastify";
 import { ProductCard } from "../../components";
+import { Loader } from "../../components/Loader";
 import { useFilter } from "../../context";
 import { useTitle } from "../../hook/useTitle";
 import { getProductList } from "../../services";
@@ -12,7 +13,6 @@ export const ProductList = () => {
   const [show, setShow] = useState(false);
   const search = useLocation().search
   const searchTerm = new URLSearchParams(search).get('q')
-
 
 
   useEffect(() => {
@@ -59,8 +59,8 @@ export const ProductList = () => {
         </div>
 
         <div className="flex flex-wrap justify-center lg:flex-row">
-          {/* {errorMessage} */}
-          {products.map((product) => (
+          {(products.length <= 0 || typeof products !== 'object') && <Loader />}
+          {(typeof products === 'object' && products.length >= 0) && products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

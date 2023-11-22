@@ -15,7 +15,7 @@ export async function getProduct(param) {
   return data
 }
 export async function getFeaturedList() {
-  const response = await fetch(`${ process.env.REACT_APP_HOST}/444/featured_products`);
+  const response = await fetch(`${process.env.REACT_APP_HOST}/444/featured_products`);
   if (!response.ok) {
     throw { message: response.statusText, status: response.status } // eslint-disable-line
   }

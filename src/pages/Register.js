@@ -1,3 +1,4 @@
+import "react-toastify/dist/ReactToastify.css";
 import React, { useEffect, useState } from "react";
 import { useRef } from "react";
 import { FaLock } from "react-icons/fa";
@@ -6,28 +7,35 @@ import { toast } from "react-toastify";
 import { useTitle } from "../hook/useTitle";
 import { register } from "../services/";
 
-  import 'react-toastify/dist/ReactToastify.css';
-
 export const Register = () => {
-useTitle("Register")
-const [verPassword, setVerPassword] = useState(true)
-const [password, setPassword] = useState("")
-const [confirm_password, setConfirm_password] = useState("")
-const navigate = useNavigate()
+  useTitle("Register")
+  const [verPassword, setVerPassword] = useState(true)
+  const [password, setPassword] = useState("")
+  const [confirm_password, setConfirm_password] = useState("")
+  const [checkbox, setCheckbox] = useState(false);
+  const [type, setType] = useState("password");
+  const navigate = useNavigate()
 
-const username = useRef()
-const email = useRef()
-const fullName = useRef()
+  const username = useRef()
+  const email = useRef()
+  const fullName = useRef()
+  useEffect(() => {
+    if (checkbox) {
+      setType("text")
+    } else {
+      setType('password')
+    }
+  }, [checkbox])
 
   useEffect(() => {
-    
-    if(password === confirm_password){
+
+    if (password === confirm_password) {
       setVerPassword(true)
     } else {
       setVerPassword(true)
     }
-    
-  }, [confirm_password,password])
+
+  }, [confirm_password, password])
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -45,9 +53,9 @@ const fullName = useRef()
       toast.error(error.message, { closeButton: true, position: "bottom-center" });
     }
   }
-    
-    
-    
+
+
+
 
 
 
@@ -60,7 +68,7 @@ const fullName = useRef()
           <h5 className="text-xl font-medium text-gray-900 dark:text-white">
             Register for CodeBook
           </h5>
-         {/* full Name */}
+          {/* full Name */}
           <div>
             <label
               htmlFor="fullName"
@@ -128,49 +136,53 @@ const fullName = useRef()
           </div>
           {/* {create password} */}
           <div>
-          <label
-            htmlFor="password"
-            className="block text-sm mb-2 font-medium text-gray-900 dark:text-white"
-          >
-            Create Password:{verPassword ? '' : <span className=" ml-2 text-sm text-red-500">password not match</span> }
-          </label>
-          <div className="relative mb-6">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-              <FaLock className=" dark:text-slate-400 text-xl " />
+            <label
+              htmlFor="password"
+              className="block text-sm mb-2 font-medium text-gray-900 dark:text-white"
+            >
+              Create Password:{verPassword ? '' : <span className=" ml-2 text-sm text-red-500">password not match</span>}
+            </label>
+            <div className="relative">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                <FaLock className=" dark:text-slate-400 text-xl " />
+              </div>
+              <input
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+                type={type}
+                name="password"
+                id="password"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="••••••••"
+              />
             </div>
-            <input
-              onChange={(e)=> setPassword(e.target.value)}
-              value={password}
-              type="password"
-              name="password"
-              id="password"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="••••••••"
-            />
+            <div className="mt-2">
+              <label className="mr-2 ">Show Password</label>
+              <input type="checkbox" id="checkbox" onChange={() => setCheckbox(!checkbox)} checked={checkbox} />
+            </div>
           </div>
-          </div>
-          {/* confirm password */}
+          
           <div>
-          <label
-            htmlFor="confirm_password"
-            className="block text-sm mb-2 font-medium text-gray-900 dark:text-white"
-          >
-            Confirm Password:
-          </label>
-          <div className="relative mb-6">
-            <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
-              <FaLock className=" dark:text-slate-400 text-xl " />
+            <label
+              htmlFor="confirm_password"
+              className="block text-sm mb-2 font-medium text-gray-900 dark:text-white"
+            >
+              Confirm Password:
+            </label>
+            <div className="relative mb-6">
+              <div className="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none">
+                <FaLock className=" dark:text-slate-400 text-xl " />
+              </div>
+              <input
+                onChange={(e) => setConfirm_password(e.target.value)}
+                value={confirm_password}
+                type={type}
+                name="confirm_password"
+                id="confirm_password"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="••••••••"
+              />
             </div>
-            <input
-              onChange={(e)=> setConfirm_password(e.target.value)}
-              value={confirm_password}
-              type="password"
-              name="confirm_password"
-              id="confirm_password"
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="••••••••"
-            />
-          </div>
           </div>
 
           <button

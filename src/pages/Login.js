@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FaLock } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
@@ -10,6 +10,18 @@ export const Login = () => {
   const [toggleEmail, setToggleEmail] = useState(false);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
+  const [checkbox, setCheckbox] = useState(false);
+  const [type, setType] = useState("password");
+
+
+  useEffect(() => {
+   if( checkbox ) {
+    setType("text")
+   } else {
+    setType('password')
+   }
+  }, [checkbox])
+  
 
   const email = useRef();
   const password = useRef();
@@ -21,29 +33,29 @@ export const Login = () => {
 
   async function handleLogin(e) {
     e.preventDefault();
-try {
-  const authDetail = {
-    email: email.current.value,
-    password: password.current.value,
-    username: "null" || username.current.value,
-  };
-  const data = await login(authDetail);
+    try {
+      const authDetail = {
+        email: email.current.value,
+        password: password.current.value,
+        username: "null" || username.current.value,
+      };
+      const data = await login(authDetail);
 
-  data.accessToken && navigate("/products");
-  !data.accessToken && toast.error(data);
-  data.accessToken &&
-    toast.success("Login Success", {
-      closeButton: false,
-      position: "top-center",
-    });
-  !data.accessToken && setError(true);
-  !data.accessToken && setMessage(data);
-}
-catch (error) {
-  toast.error(error.message, { closeButton: true, position: "bottom-center" });
-}
-}
-    
+      data.accessToken && navigate("/products");
+      !data.accessToken && toast.error(data);
+      data.accessToken &&
+        toast.success("Login Success", {
+          closeButton: false,
+          position: "top-center",
+        });
+      !data.accessToken && setError(true);
+      !data.accessToken && setMessage(data);
+    }
+    catch (error) {
+      toast.error((error.message === "Bad Request" && 'User Not Found'), { closeButton: true, position: "bottom-center" });
+    }
+  }
+
 
   return (
     <div className="flex  justify-center h-screen">
@@ -141,12 +153,17 @@ catch (error) {
                 ref={password}
                 // onChange={(e) => setPassword(e.target.value)}
                 // value={password}
-                type="password"
+                type={type}
                 name="password"
                 id="password"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="••••••••"
               />
+              
+            </div>
+            <div className='mt-[-1rem]'>
+              <label className="mr-2 ">Show Password</label>
+              <input type="checkbox" id="checkbox" onChange={() => setCheckbox(!checkbox)} checked={checkbox} />
             </div>
           </div>
           <div className="flex items-start">
