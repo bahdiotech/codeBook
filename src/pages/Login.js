@@ -15,13 +15,13 @@ export const Login = () => {
 
 
   useEffect(() => {
-   if( checkbox ) {
-    setType("text")
-   } else {
-    setType('password')
-   }
+    if (checkbox) {
+      setType("text")
+    } else {
+      setType('password')
+    }
   }, [checkbox])
-  
+
 
   const email = useRef();
   const password = useRef();
@@ -52,14 +52,40 @@ export const Login = () => {
       !data.accessToken && setMessage(data);
     }
     catch (error) {
-      toast.error((error.message === "Bad Request" && 'User Not Found'), { closeButton: true, position: "bottom-center" });
+      toast.error((error.message === "Bad Request" ? 'User Not Found' : error.message), { closeButton: true, position: "bottom-center" });
     }
   }
+    async function handleLoginGuest(e){
 
+      try {
+        email.current.value = 'abidex139@gmail.com'
+        password.current.value = '07033485812'
+
+        const authDetail = {
+          email: email.current.value,
+          password: password.current.value,
+          username: "null" || username.current.value,
+        };
+        const data = await login(authDetail);
+
+        data.accessToken && navigate("/products");
+        !data.accessToken && toast.error(data);
+        data.accessToken &&
+          toast.success("Login Success", {
+            closeButton: false,
+            position: "top-center",
+          });
+        !data.accessToken && setError(true);
+        !data.accessToken && setMessage(data);
+      } catch (error) {
+        toast.error((error.message === "Bad Request" ? 'User Not Found' : error.message), { closeButton: true, position: "bottom-center" });
+      }
+      
+    }
 
   return (
     <div className="flex  justify-center h-screen">
-      <div className="w-full  h880:mt-20 h880:min-h-[40rem] max-w-lg max-h-[30rem] my-4 p-3 bg-white border  border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+      <div className="w-full  h880:mt-20 h880:min-h-[40rem] max-w-lg max-h-[40rem] my-4 p-3 bg-white border  border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
         <form className="space-y-6 h880:space-y-10 " onSubmit={handleLogin}>
           <h5 className="text-xl font-medium text-gray-900 dark:text-white">
             Log In to CodeBook
@@ -159,13 +185,13 @@ export const Login = () => {
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="••••••••"
               />
-              
+
             </div>
             <div className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               <label className="mr-2 ">Show Password</label>
-              <input 
+              <input
                 className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-               type="checkbox" id="checkbox" onChange={() => setCheckbox(!checkbox)} checked={checkbox} />
+                type="checkbox" id="checkbox" onChange={() => setCheckbox(!checkbox)} checked={checkbox} />
             </div>
           </div>
           <div className="flex items-start">
@@ -197,6 +223,13 @@ export const Login = () => {
             className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
           >
             Login to your account
+          </button>
+          <button
+            type="submit"
+            onClick={handleLoginGuest}
+            className="w-full text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-700 dark:hover:bg-blue-800 dark:focus:ring-blue-800"
+          >
+            Login as Guest
           </button>
           <div className="text-sm font-medium text-gray-500 dark:text-gray-300">
             Not registered?{" "}
