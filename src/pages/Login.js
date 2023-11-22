@@ -161,9 +161,11 @@ export const Login = () => {
               />
               
             </div>
-            <div className='mt-[-1rem]'>
+            <div className="mt-2 text-sm font-medium text-gray-900 dark:text-gray-300">
               <label className="mr-2 ">Show Password</label>
-              <input type="checkbox" id="checkbox" onChange={() => setCheckbox(!checkbox)} checked={checkbox} />
+              <input 
+                className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+               type="checkbox" id="checkbox" onChange={() => setCheckbox(!checkbox)} checked={checkbox} />
             </div>
           </div>
           <div className="flex items-start">
