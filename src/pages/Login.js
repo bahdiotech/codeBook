@@ -60,7 +60,6 @@ export const Login = () => {
       try {
         email.current.value = process.env.REACT_APP_EMAIL
         password.current.value = process.env.REACT_APP_PASSWORD
-
         const authDetail = {
           email: email.current.value,
           password: password.current.value,
